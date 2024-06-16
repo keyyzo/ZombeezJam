@@ -1,0 +1,23 @@
+--------------------------------------------
+Naming convention for weapons - in order of weakest to most powerful.
+
+This naming convention is used for all weapons related animations and static graphics,
+including running animations, firing animations, bullets and icons.
+
+1_1:  Pistol 1 (Police pistol)
+1_2:  Pistol 2 (Glock)
+1_3:  Pistol 3 (Magnum)
+2_1:  Shotgun 1 (Sawn off)
+2_2:  Shotgun 2 (Pump action)
+2_3:  Shotgun 3 (Assault shotgun)
+3_1:  Machine gun 1 (uzi)
+3_2:  Machine gun 2 (AK47)
+3_3:  Machine gun 3 (M60)
+
+
+--------------------------------------------
+Application of firing animations
+
+
+The idea is that the firing animations can be laid over each player running animation OR over static player standing graphics.
+Firing animations are generic and are correctly positioned to work for all characters.

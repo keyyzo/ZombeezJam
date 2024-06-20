@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -30,12 +31,25 @@ public class PlayerController : MonoBehaviour
 
     // Specific Movement Components
     private float horizontalInput;
+    private bool facingRight = true;
+
+    // Gun Components
+    private GameObject gunOne;
+    private GameObject gunTwo;
+    private bool haveGunOne = false;
+    private bool haveGunTwo = false;
+    private bool firingGun;
+    private float tempDirection = 1f;
+
+
+    BaseWeapon baseWeapon;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         capsuleCollider = GetComponent<CapsuleCollider2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        baseWeapon = GetComponent<BaseWeapon>();
     }
 
     // Start is called before the first frame update
@@ -43,12 +57,44 @@ public class PlayerController : MonoBehaviour
     {
         playerInputHandler = PlayerInputHandler.Instance;
         isSlowWalking = false;
+        gunOne = baseWeapon.gameObject;
+        gunTwo = null;
     }
 
     // Update is called once per frame
     void Update()
     {
-     
+        if (gunOne)
+        {
+            haveGunOne = true;
+        }
+
+        else
+        {
+            haveGunOne = false;
+        }
+
+        if (gunTwo)
+        {
+            haveGunTwo = true;
+        }
+
+        else
+        {
+            haveGunTwo = false;
+        }
+
+        if (facingRight)
+        {
+            tempDirection = 1f;
+        }
+
+        else
+        {
+            tempDirection = -1f;
+        }
+
+
         InputCallHandler();
     }
 
@@ -59,6 +105,11 @@ public class PlayerController : MonoBehaviour
         if (shouldJump)
         { 
             ApplyJump();
+        }
+
+        if (firingGun)
+        {
+            FireGun1();
         }
     }
 
@@ -108,24 +159,50 @@ public class PlayerController : MonoBehaviour
         horizontalInput = playerInputHandler.MoveInput.x;
         shouldJump = playerInputHandler.UseJumpTriggered && isGrounded;
         isSlowWalking = playerInputHandler.UseSlowWalkTriggered;
+        firingGun = playerInputHandler.UseFireTriggered;
 
         if (horizontalInput != 0)
         {
-            FlipSprite(horizontalInput);
+            //FlipSprite(horizontalInput);
+            NewCharacterFlip();
         }
     }
 
     private void FlipSprite(float horizontalMovement)
     {
+        Vector3 bulletTempPos = transform.GetChild(0).gameObject.transform.localPosition;
+
         if (horizontalMovement < 0)
         {
             spriteRenderer.flipX = true;
+            transform.GetChild(0).gameObject.transform.localPosition = new Vector3(-bulletTempPos.x, bulletTempPos.y, bulletTempPos.z);
         }
 
         else if (horizontalMovement > 0)
         {
             spriteRenderer.flipX = false;
+            transform.GetChild(0).gameObject.transform.localPosition = new Vector3(bulletTempPos.x, bulletTempPos.y, bulletTempPos.z);
         }
+
+
+    }
+
+    void NewCharacterFlip()
+    {
+        if ((horizontalInput < 0 && facingRight) || (horizontalInput > 0 && !facingRight))
+        {
+            facingRight = !facingRight;
+            transform.Rotate(new Vector3(0, 180, 0));
+        }
+    }
+
+    void FireGun1()
+    {
+        
+        
+        Debug.Log("Gun One Fired!");
+        gunOne.GetComponent<BaseWeapon>().FireWeapon(tempDirection);
+        
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

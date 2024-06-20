@@ -182,17 +182,6 @@
                 },
                 {
                     "name": "",
-                    "id": "70033451-6fe2-47d0-937e-5f02ffab32c4",
-                    "path": "<Gamepad>/buttonSouth",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Jump",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "ba4d1d61-20da-4d98-b68b-71658b01d92d",
                     "path": "<Mouse>/leftButton",
                     "interactions": "",
@@ -298,6 +287,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Pickup",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "70033451-6fe2-47d0-937e-5f02ffab32c4",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Jump",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
